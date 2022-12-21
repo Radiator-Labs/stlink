@@ -93,9 +93,7 @@ endif ()
 # Dependencies
 ###
 
-find_package(libusb REQUIRED
-    PATHS /usr/local /usr/lib
-)
+find_package(libusb REQUIRED)
 
 ## Check for system-specific additional header files and libraries
 
