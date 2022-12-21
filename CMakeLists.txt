@@ -75,7 +75,7 @@ include(${CMAKE_MODULE_PATH}/get_version.cmake) # Determine project version
 include(GNUInstallDirs) # Define GNU standard installation directories
 
 # Define install directory /usr/share
-set(CMAKE_INSTALL_SHAREDIR /usr/share/)
+set(CMAKE_INSTALL_SHAREDIR ./share)
 
 ## Set C build flags
 if (NOT MSVC)
@@ -93,7 +93,9 @@ endif ()
 # Dependencies
 ###
 
-find_package(libusb REQUIRED)
+find_package(libusb REQUIRED
+    PATHS /usr/local /usr/lib
+)
 
 ## Check for system-specific additional header files and libraries
 
@@ -317,17 +319,10 @@ add_executable(st-info ${ST-INFO_SOURCES})
 add_executable(st-util ${ST-UTIL_SOURCES})
 add_executable(st-trace ${ST-TRACE_SOURCES})
 
-if (WIN32)
-    target_link_libraries(st-flash ${STLINK_LIB_STATIC} ${SSP_LIB})
-    target_link_libraries(st-info ${STLINK_LIB_STATIC} ${SSP_LIB})
-    target_link_libraries(st-util ${STLINK_LIB_STATIC} ${SSP_LIB})
-    target_link_libraries(st-trace ${STLINK_LIB_STATIC} ${SSP_LIB})
-else ()
-    target_link_libraries(st-flash ${STLINK_LIB_SHARED} ${SSP_LIB})
-    target_link_libraries(st-info ${STLINK_LIB_SHARED} ${SSP_LIB})
-    target_link_libraries(st-util ${STLINK_LIB_SHARED} ${SSP_LIB})
-    target_link_libraries(st-trace ${STLINK_LIB_SHARED} ${SSP_LIB})
-endif ()
+target_link_libraries(st-flash ${STLINK_LIB_STATIC} ${SSP_LIB})
+target_link_libraries(st-info ${STLINK_LIB_STATIC} ${SSP_LIB})
+target_link_libraries(st-util ${STLINK_LIB_STATIC} ${SSP_LIB})
+target_link_libraries(st-trace ${STLINK_LIB_STATIC} ${SSP_LIB})
 
 install(TARGETS st-flash DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(TARGETS st-info DESTINATION ${CMAKE_INSTALL_BINDIR})

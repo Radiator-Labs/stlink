@@ -5,7 +5,8 @@
 MAKEFLAGS += -s
 
 # additional flags for cmake, e.g. install path -DCMAKE_INSTALL_PREFIX=$(HOME)/.local
-CMAKEFLAGS +=
+# -DCMAKE_INSTALL_PREFIX=$(HOME)/Projects/radiator-labs/nerves/stlink/boof
+CMAKEFLAGS += 
 
 all: release
 ci: debug release test
